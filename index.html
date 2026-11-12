@@ -8,6 +8,18 @@
     <meta name="theme-color" content="#101216" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)" />
     <title>전적 기록</title>
+    <script>
+      // 저장된 화면 테마를 첫 화면이 그려지기 전에 적용한다 (규칙은 src/lib/theme.ts 와 같다)
+      try {
+        var t = localStorage.getItem('theme')
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.dataset.theme = t
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.content = t === 'dark' ? '#101216' : '#f4f5f7'
+          })
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

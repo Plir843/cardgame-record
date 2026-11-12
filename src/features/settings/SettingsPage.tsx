@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { PageHeader } from '../../components/PageHeader'
+import { Segmented } from '../../components/Segmented'
 import { Sheet } from '../../components/Sheet'
 import { cardCls, ghostBtnCls, inputCls, primaryBtnCls, sectionTitleCls } from '../../components/styles'
 import { useToast } from '../../components/toast-context'
@@ -17,6 +18,7 @@ import { useEvents, useLossTags, useMatches, useSetting } from '../../db/hooks'
 import { addLossTag, updateLossTag } from '../../db/repo'
 import type { LossTag } from '../../db/schema'
 import { todayStr } from '../../lib/date'
+import { getTheme, setTheme, type Theme } from '../../lib/theme'
 
 export default function SettingsPage() {
   const toast = useToast()
@@ -28,6 +30,7 @@ export default function SettingsPage() {
   const [pending, setPending] = useState<BackupFile | null>(null)
   const [persisted, setPersisted] = useState<boolean | null>(null)
   const [tagName, setTagName] = useState('')
+  const [theme, setThemeState] = useState<Theme>(getTheme)
 
   // 브라우저가 저장 공간 부족 시 기록을 지우지 않도록 요청한다 (HTTPS 에서만 동작)
   useEffect(() => {
@@ -89,6 +92,26 @@ export default function SettingsPage() {
     <>
       <PageHeader title="설정" />
       <div className="space-y-7 px-4 pt-2">
+        <section>
+          <h2 className={sectionTitleCls}>화면</h2>
+          <Segmented
+            label="화면 테마"
+            options={[
+              { value: 'system', label: '시스템' },
+              { value: 'light', label: '라이트' },
+              { value: 'dark', label: '다크' },
+            ]}
+            value={theme}
+            onChange={(t) => {
+              setTheme(t)
+              setThemeState(t)
+            }}
+          />
+          {theme === 'system' && (
+            <p className="mt-2 text-[13px] text-ink-2">폰의 다크 모드 설정을 따릅니다.</p>
+          )}
+        </section>
+
         <section>
           <h2 className={sectionTitleCls}>데이터 백업</h2>
           <div className={`${cardCls} space-y-3 p-4`}>

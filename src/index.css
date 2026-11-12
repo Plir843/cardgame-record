@@ -19,8 +19,14 @@
     "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
 }
 
+/*
+ * 화면 테마 (src/lib/theme.ts)
+ * - 기본(시스템): 폰 설정을 따른다
+ * - <html data-theme="light|dark">: 사용자가 설정에서 직접 고른 값
+ * 다크 색상은 "시스템 다크 + 라이트를 고르지 않음" 과 "다크를 고름" 두 곳에 같은 값으로 둔다.
+ */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --bg: #f4f5f7;
   --surface: #ffffff;
   --surface-2: #eceef2;
@@ -37,7 +43,8 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #101216;
     --surface: #191c22;
     --surface-2: #242831;
@@ -52,6 +59,24 @@
     --loss-ink: #2a0505;
     --draw: #8b93a1;
   }
+}
+
+/* 위 다크 색상과 같은 값을 유지할 것 */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101216;
+  --surface: #191c22;
+  --surface-2: #242831;
+  --line: #313640;
+  --ink: #eef0f4;
+  --ink-2: #9aa1ad;
+  --accent: #f5a524;
+  --accent-ink: #1a1200;
+  --win: #34c987;
+  --win-ink: #04220f;
+  --loss: #ff6b6b;
+  --loss-ink: #2a0505;
+  --draw: #8b93a1;
 }
 
 html,

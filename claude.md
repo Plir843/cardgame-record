@@ -13,6 +13,7 @@ Vite, React, TypeScript, Tailwind CSS v4, Dexie(IndexedDB), react-router(HashRou
 - `src/domain/` 순수 함수: `stats.ts`(통계), `summary.ts`(대회 요약·다음 라운드·공유 텍스트), `deckRanking.ts`(상대 덱 빠른 선택 순서)
 - `src/features/` 화면: events(대회), matches(라운드 입력/수정), stats, decks, settings
 - `src/components/` 공통 UI
+- `src/lib/theme.ts` 화면 테마(시스템/라이트/다크). 첫 화면 번쩍임을 막으려고 localStorage 에 저장하고, `index.html` 인라인 스크립트가 같은 규칙으로 먼저 적용한다. 다크 색상은 `index.css` 두 곳에 같은 값으로 있다.
 
 ## 핵심 규칙 (데이터)
 - 대회(EventRecord) 안에 라운드(Match)를 추가한다. `eventId` 가 null 인 Match 는 단독(친선) 기록.
