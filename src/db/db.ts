@@ -9,6 +9,7 @@ import {
   type Setting,
 } from './schema'
 
+// DB 이름은 앱 이름이 바뀌어도 그대로 둔다 (바꾸면 기존 기록이 담긴 DB 를 찾지 못한다)
 export const db = new Dexie('digimon-record') as Dexie & {
   decks: Table<Deck, ID>
   events: Table<EventRecord, ID>

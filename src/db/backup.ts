@@ -13,6 +13,7 @@ import {
   type Match,
 } from './schema'
 
+// 백업 파일 식별자. 이미 내보낸 백업을 계속 가져올 수 있도록 앱 이름이 바뀌어도 그대로 둔다
 const APP_ID = 'digimon-record'
 export const LAST_BACKUP_KEY = 'lastBackupAt'
 

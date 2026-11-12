@@ -17,7 +17,7 @@ export default defineConfig({
       manifest: {
         name: '전적 기록',
         short_name: '전적',
-        description: '디지몬 카드게임 대회 전적 기록과 통계',
+        description: '카드게임 대회 전적 기록과 통계',
         lang: 'ko',
         start_url: './',
         scope: './',

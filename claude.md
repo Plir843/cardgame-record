@@ -1,7 +1,8 @@
 # 전적 기록 앱
 
 ## 프로젝트 개요
-디지몬 카드게임 개인 전적 기록/통계 웹앱. 모바일 우선(갤럭시 S24 Ultra), 사용자 1명.
+카드게임(현재 주로 디지몬 카드게임) 개인 전적 기록/통계 웹앱. 모바일 우선(갤럭시 S24 Ultra), 사용자 1명.
+저장소: github.com/Plir843/cardgame-record, 배포 주소: https://plir843.github.io/cardgame-record/
 서버와 로그인 없이 브라우저 IndexedDB 에만 저장하는 PWA. GitHub Pages 로 배포한다(상대 경로 빌드 + HashRouter 라 하위 경로에서도 동작).
 
 ## 기술 스택
