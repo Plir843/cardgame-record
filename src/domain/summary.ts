@@ -129,14 +129,20 @@ export function shareText(
       ? ` (${event.finalRank}위/${event.participants}명)`
       : ` (${event.finalRank}위)`
   }
+  // 한 줄 형식: '결승 vs 후디에 선 ○' (라운드 → 상대 → 선후공/Bo3 → 결과)
   const lines = sorted.map((m) => {
     const label = matchLabel(m)
     const mark = RESULT_MARK[m.result]
-    if (m.result === 'bye') return `${label} ${mark} 부전승`
-    const opp = `vs ${deckName(m.oppDeckId)}`
-    if (m.matchFormat === 'bo3') return `${label} ${mark} (Bo3) ${opp}`
-    const turn = m.turnOrder === 'first' ? '선 ' : m.turnOrder === 'second' ? '후 ' : ''
-    return `${label} ${mark} ${turn}${opp}`
+    if (m.result === 'bye') return `${label} 부전승 ${mark}`
+    const detail =
+      m.matchFormat === 'bo3'
+        ? 'Bo3'
+        : m.turnOrder === 'first'
+          ? '선'
+          : m.turnOrder === 'second'
+            ? '후'
+            : ''
+    return [label, `vs ${deckName(m.oppDeckId)}`, detail, mark].filter(Boolean).join(' ')
   })
   return [head, `덱: ${deckName(event.myDeckId)} / ${recordShort(total)}${rank}`, ...lines].join('\n')
 }

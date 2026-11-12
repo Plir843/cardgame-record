@@ -124,15 +124,20 @@ describe('shareText', () => {
       [
         '매장대회 2026-11-12 @○○샵 (BT23)',
         '덱: 임페리얼드라몬 / 2-1 (2위/16명)',
-        'R1 ○ 선 vs 오메가몬',
-        'R2 ○ 부전승',
-        '4강 × (Bo3) vs 오메가몬',
+        'R1 vs 오메가몬 선 ○',
+        'R2 부전승 ○',
+        '4강 vs 오메가몬 Bo3 ×',
       ].join('\n'),
     )
   })
 
   it('매장·포맷·순위가 없으면 생략한다', () => {
     const text = shareText(makeEvent(), [swiss(1, { turnOrder: 'second' })], () => '덱')
-    expect(text.split('\n').slice(0, 3)).toEqual(['매장대회 2026-11-12', '덱: 덱 / 1-0', 'R1 ○ 후 vs 덱'])
+    expect(text.split('\n').slice(0, 3)).toEqual(['매장대회 2026-11-12', '덱: 덱 / 1-0', 'R1 vs 덱 후 ○'])
+  })
+
+  it('선후공을 모르면 그 자리를 비운다', () => {
+    const text = shareText(makeEvent(), [makeMatch({ stage: 'final', turnOrder: null, result: 'loss' })], () => '덱')
+    expect(text.split('\n')[2]).toBe('결승 vs 덱 ×')
   })
 })
