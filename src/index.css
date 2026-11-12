@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* 색상 토큰: 실제 값은 아래 :root 에서 라이트/다크로 나눠 정의한다 */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-win: var(--win);
+  --color-win-ink: var(--win-ink);
+  --color-loss: var(--loss);
+  --color-loss-ink: var(--loss-ink);
+  --color-draw: var(--draw);
+  --font-sans: "Pretendard Variable", Pretendard, system-ui, -apple-system,
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+}
+
+:root {
+  color-scheme: light dark;
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #eceef2;
+  --line: #d9dde4;
+  --ink: #14171c;
+  --ink-2: #5f6672;
+  --accent: #e08a00;
+  --accent-ink: #ffffff;
+  --win: #128a55;
+  --win-ink: #ffffff;
+  --loss: #d63c3c;
+  --loss-ink: #ffffff;
+  --draw: #7a8290;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101216;
+    --surface: #191c22;
+    --surface-2: #242831;
+    --line: #313640;
+    --ink: #eef0f4;
+    --ink-2: #9aa1ad;
+    --accent: #f5a524;
+    --accent-ink: #1a1200;
+    --win: #34c987;
+    --win-ink: #04220f;
+    --loss: #ff6b6b;
+    --loss-ink: #2a0505;
+    --draw: #8b93a1;
+  }
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+button {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+/* 모바일에서 입력창 포커스 시 화면이 확대되지 않도록 16px 이상 유지 */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* 하단 고정 영역이 제스처 바에 가려지지 않게 하는 여백 */
+@utility pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 12px);
+}
