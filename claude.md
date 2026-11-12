@@ -2,7 +2,7 @@
 
 ## 프로젝트 개요
 디지몬 카드게임 개인 전적 기록/통계 웹앱. 모바일 우선(갤럭시 S24 Ultra), 사용자 1명.
-서버와 로그인 없이 브라우저 IndexedDB 에만 저장하는 PWA. 배포 위치는 미정(상대 경로 빌드 + HashRouter 로 어디든 올릴 수 있게 해 둠).
+서버와 로그인 없이 브라우저 IndexedDB 에만 저장하는 PWA. GitHub Pages 로 배포한다(상대 경로 빌드 + HashRouter 라 하위 경로에서도 동작).
 
 ## 기술 스택
 Vite, React, TypeScript, Tailwind CSS v4, Dexie(IndexedDB), react-router(HashRouter), vite-plugin-pwa
@@ -35,6 +35,10 @@ Vite, React, TypeScript, Tailwind CSS v4, Dexie(IndexedDB), react-router(HashRou
 - `npm run dev` 개발 서버, `npm run dev:host` 같은 Wi-Fi 의 폰에서 접속
 - `npm run build` 후 `npm run preview` 로 PWA(오프라인) 확인. 서비스 워커는 빌드 결과물에서만 동작한다.
 - `npm test` 자동 테스트(vitest, 순수 함수와 백업 파일 검사), `npm run test:watch` 저장할 때마다 실행
+
+## 배포
+- `main` 에 push 하면 `.github/workflows/deploy.yml` 이 테스트 → 빌드 → GitHub Pages 배포를 한다. 테스트가 실패하면 배포하지 않는다.
+- 배포 후 폰에서는 앱 안의 "새 버전이 있습니다 → 업데이트" 를 눌러야 새 버전이 적용된다.
 
 ## 의존성 메모
 - `package.json` 의 `overrides.glob` 은 workbox-build 의 glob 보안 경고를 없애려고 고정한 것. vite-plugin-pwa 를 올릴 때 필요 없어졌는지 `npm audit` 로 확인한다.
