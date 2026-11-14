@@ -77,6 +77,11 @@ describe('nextAction', () => {
     })
   })
 
+  it('직접 종료한 대회는 다음 라운드를 제안하지 않는다 (스위스만으로 끝난 대회)', () => {
+    expect(nextAction([swiss(1), swiss(2)], true)).toBeNull()
+    expect(nextAction([swiss(1), makeMatch({ stage: 'top8', result: 'win' })], true)).toBeNull()
+  })
+
   it('본선에서 지거나 결승까지 끝나면 null', () => {
     expect(nextAction([makeMatch({ stage: 'semi', result: 'loss' })])).toBeNull()
     expect(nextAction([makeMatch({ stage: 'final', result: 'win' })])).toBeNull()

@@ -30,7 +30,7 @@ export default function EventDetailPage() {
   const deckName = deckNamer(decks)
   const matches = sortMatches(allMatches.filter((m) => m.eventId === event.id))
   const summary = summarizeEvent(matches)
-  const next = nextAction(matches)
+  const next = nextAction(matches, event.closed)
   const hasTop = matches.some((m) => m.stage !== 'swiss')
   const swissCount = matches.filter((m) => m.stage === 'swiss').length
   const entry = (stage: string) => `/events/${event.id}/match/new?stage=${stage}`
@@ -39,6 +39,17 @@ export default function EventDetailPage() {
   const copy = async () => {
     const ok = await copyText(shareText(event, matches, deckName))
     toast({ message: ok ? '결과를 복사했습니다' : '복사하지 못했습니다', duration: 2500 })
+  }
+
+  const setClosed = async (closed: boolean) => {
+    await updateEvent(event.id, { closed })
+    if (closed) {
+      toast({
+        message: '대회를 종료했습니다',
+        actionLabel: '되돌리기',
+        onAction: () => updateEvent(event.id, { closed: false }),
+      })
+    }
   }
 
   const remove = async () => {
@@ -69,6 +80,18 @@ export default function EventDetailPage() {
             </p>
           )}
           <RankInputs key={event.id} event={event} />
+          {event.closed && (
+            <div className="mt-3 flex items-center justify-between gap-2 border-t border-line pt-3">
+              <span className="text-[14px] text-ink-2">종료한 대회</span>
+              <button
+                type="button"
+                className="h-10 shrink-0 rounded-lg px-3 text-[14px] font-medium text-accent active:bg-surface-2"
+                onClick={() => void setClosed(false)}
+              >
+                종료 취소
+              </button>
+            </div>
+          )}
         </section>
 
         <section>
@@ -116,9 +139,15 @@ export default function EventDetailPage() {
                   본선
                 </button>
               )}
+              {/* 스위스만으로 끝나는 대회 등은 직접 종료한다 */}
+              {matches.length > 0 && (
+                <button type="button" className={`${ghostBtnCls} h-16 shrink-0`} onClick={() => void setClosed(true)}>
+                  종료
+                </button>
+              )}
             </>
           ) : (
-            // 본선에서 탈락했거나 결승까지 끝난 대회: 빠진 기록을 추가하는 버튼만 둔다
+            // 본선에서 탈락했거나 결승까지 끝났거나 직접 종료한 대회: 빠진 기록을 추가하는 버튼만 둔다
             <>
               <Link to={entry('swiss')} className={`${ghostBtnCls} h-14 flex-1`}>
                 예선 R{swissCount + 1} 추가

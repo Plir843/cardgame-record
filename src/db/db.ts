@@ -28,6 +28,18 @@ db.version(1).stores({
   settings: 'key',
 })
 
+// 스키마 v2: 대회에 종료 여부(closed) 추가. 인덱스는 그대로이고 기존 대회는 false 로 채운다.
+db.version(2)
+  .stores({})
+  .upgrade((tx) =>
+    tx
+      .table<EventRecord>('events')
+      .toCollection()
+      .modify((e) => {
+        e.closed ??= false
+      }),
+  )
+
 // 최초 실행 시 기본 패배 원인 태그를 넣는다
 db.on('populate', (tx) => {
   void tx.table('lossTags').bulkAdd(DEFAULT_LOSS_TAGS)

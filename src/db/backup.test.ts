@@ -21,6 +21,13 @@ describe('parseBackup', () => {
     expect(parse(file)).toEqual(file)
   })
 
+  it('v1 백업은 대회에 closed: false 를 채워 현재 버전으로 바꾼다', () => {
+    const { closed: _omit, ...v1Event } = makeEvent()
+    const parsed = parse({ ...valid(), schemaVersion: 1, events: [v1Event] })
+    expect(parsed.schemaVersion).toBe(SCHEMA_VERSION)
+    expect(parsed.events[0]).toEqual({ ...v1Event, closed: false })
+  })
+
   it('JSON 이 아니면 거부한다', () => {
     expect(() => parseBackup('{not json')).toThrow('JSON 파일을 읽을 수 없습니다')
   })

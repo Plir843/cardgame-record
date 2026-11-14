@@ -65,8 +65,13 @@ export function parseBackup(text: string): BackupFile {
   }
   const tables = [file.decks, file.events, file.matches, file.lossTags]
   if (!tables.every(Array.isArray)) throw new Error('백업 파일의 내용이 올바르지 않습니다')
-  // (현재는 v1 뿐이라 변환할 것이 없다)
   const backup = file as BackupFile
+  // ── 이전 버전 → 현재 버전 변환 (db.ts 의 upgrade 와 같은 내용) ──
+  if (backup.schemaVersion < 2) {
+    // v2: 대회 종료 여부 추가
+    backup.events = backup.events.map((e) => ({ ...e, closed: e?.closed ?? false }))
+  }
+  backup.schemaVersion = SCHEMA_VERSION
   // 가져오기는 기존 기록을 모두 지우므로, 화면이 깨질 만한 레코드가 있으면 미리 거부한다
   const ok =
     backup.decks.every((d) => isStr(d?.id) && isStr(d.name)) &&

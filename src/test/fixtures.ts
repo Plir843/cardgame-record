@@ -41,6 +41,7 @@ export function makeEvent(over: Partial<EventRecord> = {}): EventRecord {
     myDeckId: 'mine',
     finalRank: null,
     participants: null,
+    closed: false,
     memo: '',
     createdAt: 0,
     updatedAt: 0,

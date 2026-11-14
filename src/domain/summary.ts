@@ -74,8 +74,10 @@ export interface NextAction {
  * - 본선 기록이 없으면 다음 예선 라운드
  * - 본선에서 이겼으면 다음 단계
  * - 본선에서 졌거나 결승까지 끝났으면 null (대회 종료)
+ * - 직접 종료한 대회(closed)도 null
  */
-export function nextAction(matches: Match[]): NextAction | null {
+export function nextAction(matches: Match[], closed = false): NextAction | null {
+  if (closed) return null
   const sorted = sortMatches(matches)
   const tops = sorted.filter((m) => m.stage !== 'swiss')
   if (tops.length === 0) {

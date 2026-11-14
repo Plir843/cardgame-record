@@ -35,6 +35,8 @@ export interface EventRecord {
   /** 최종 순위와 참가자 수는 직접 입력한다 */
   finalRank: number | null
   participants: number | null
+  /** 직접 종료한 대회 (스위스만으로 끝난 경우 등). 스키마 v2 에서 추가 */
+  closed: boolean
   memo: string
   createdAt: number
   updatedAt: number
@@ -79,7 +81,12 @@ export interface Setting {
   value: unknown
 }
 
-export const SCHEMA_VERSION = 1
+/**
+ * 스키마 버전 기록
+ * - v1: 최초
+ * - v2: EventRecord.closed 추가 (기존 대회는 false)
+ */
+export const SCHEMA_VERSION = 2
 
 export const STAGES: Stage[] = ['swiss', 'top16', 'top8', 'semi', 'final']
 export const TOP_STAGES: Stage[] = ['top16', 'top8', 'semi', 'final']

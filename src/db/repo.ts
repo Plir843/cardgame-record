@@ -70,7 +70,7 @@ export async function updateDeck(
 
 export type EventInput = Pick<EventRecord, 'name' | 'date' | 'store' | 'format' | 'myDeckId'>
 export type EventPatch = Partial<
-  EventInput & Pick<EventRecord, 'finalRank' | 'participants' | 'memo'>
+  EventInput & Pick<EventRecord, 'finalRank' | 'participants' | 'memo' | 'closed'>
 >
 
 export async function createEvent(input: EventInput): Promise<EventRecord> {
@@ -83,6 +83,7 @@ export async function createEvent(input: EventInput): Promise<EventRecord> {
     myDeckId: input.myDeckId,
     finalRank: null,
     participants: null,
+    closed: false,
     memo: '',
     createdAt: now(),
     updatedAt: now(),

@@ -21,6 +21,7 @@ Vite, React, TypeScript, Tailwind CSS v4, Dexie(IndexedDB), react-router(HashRou
 - Match 의 `date·format·myDeckId` 는 대회 값을 복사한 것. 대회를 수정하면 `repo.updateEvent` 가 함께 갱신한다.
 - 통계: 부전승 제외, 무승부는 판수에 포함, 선후공 승률은 단판만 집계.
 - 최종 순위는 직접 입력(자동 계산 불가).
+- 대회 종료: 본선 탈락·결승 기록 시 자동, 스위스만으로 끝난 대회는 `EventRecord.closed` 로 직접 종료(스키마 v2).
 - 덱은 삭제하지 않고 숨김(archived) 처리한다.
 - 특이사항은 라운드(Match) 메모에 적는다. `EventRecord.memo` 는 스키마에만 있고 화면에서 쓰지 않는다.
 

@@ -63,7 +63,7 @@ export default function EventListPage() {
             event={ev}
             matches={byEvent.get(ev.id) ?? []}
             deckName={deckName(ev.myDeckId)}
-            isToday={ev.date === today}
+            isToday={ev.date === today && !ev.closed}
           />
         ))}
 
@@ -111,7 +111,7 @@ function EventCard({
   isToday: boolean
 }) {
   const summary = summarizeEvent(matches)
-  const next = nextAction(matches)
+  const next = nextAction(matches, event.closed)
   const meta = [formatDate(event.date), event.store, event.format].filter(Boolean).join(' · ')
   const sub = [
     summary.topLabel && `예선 ${recordShort(summary.swiss)} · ${summary.topLabel}`,
